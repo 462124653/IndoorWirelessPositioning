@@ -25,29 +25,31 @@ class GUID(Structure):
 
 
 WLAN_INTERFACE_STATE = c_uint
-(wlan_interface_state_not_ready,
- wlan_interface_state_connected,
- wlan_interface_state_ad_hoc_network_formed,
- wlan_interface_state_disconnecting,
- wlan_interface_state_disconnected,
- wlan_interface_state_associating,
- wlan_interface_state_discovering,
- wlan_interface_state_authenticating) = map(WLAN_INTERFACE_STATE, range(0, 8))
+(wlan_interface_state_not_ready,                      # =0 The interface is not ready to operate.
+ wlan_interface_state_connected,                      # =1 The interface is connected to a network.
+ wlan_interface_state_ad_hoc_network_formed,          # =2 The interface is the first node in an ad hoc network.
+ wlan_interface_state_disconnecting,                  # =3 The interface is disconnecting from the current network.
+ wlan_interface_state_disconnected,                   # =4 The interface is not connected to any network.
+ wlan_interface_state_associating,                    # =5 The interface is attempting to associate with a network.
+ wlan_interface_state_discovering,                    # =6 The interface is not covering to any network.
+ wlan_interface_state_authenticating                  # =7 The interface is in the process of authenticating.
+ ) = map(WLAN_INTERFACE_STATE, range(0, 8))
 
 
 class WLAN_INTERFACE_INFO(Structure):
     _fields_ = [
-        ("InterfaceGuid", GUID),
-        ("strInterfaceDescription", c_wchar * 256),
-        ("isState", WLAN_INTERFACE_STATE)
+        ("InterfaceGuid", GUID),                       # 接口的GUID
+        ("strInterfaceDescription", c_wchar * 256),    # 接口的描述信息
+        ("isState", WLAN_INTERFACE_STATE)              # 包含一个 WLAN_INTERFACE_STATE 值，标示这个接口的当前状态。
     ]
 
 
 class WLAN_INTERFACE_INFO_LIST(Structure):
     _fields_ = [
-        ("NumberOfItems", DWORD),
-        ("Index", DWORD),
-        ("InterfaceInfo", WLAN_INTERFACE_INFO * 1)
+        ("NumberOfItems", DWORD),                       # WLAN_INTERFACE_INFO 中包含的单元的个数。
+        ("Index", DWORD),                               # 当前单元的索引，从0开始到 NumberOfItems-1
+                                                        # 这个参数一般用于在WLAN_INTERFACE_INFO_LIST,被用作参数传递时的一个传递偏移量,这个参数在用之前必须要进行初始化。
+        ("InterfaceInfo", WLAN_INTERFACE_INFO * 1)      # 包含WLAN_INTERFACE_INFO 结构体的阵列，用于记录接口信息。
     ]
 
 
