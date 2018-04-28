@@ -15,7 +15,7 @@ wlanapi = windll.LoadLibrary('wlanapi.dll')
 ERROR_SUCCESS = 0
 
 
-class GUID(Structure):
+class GUID(Structure):          # 定义GUID结构体
     _fields_ = [
         ('Data1', c_ulong),
         ('Data2', c_ushort),
@@ -24,7 +24,7 @@ class GUID(Structure):
     ]
 
 
-WLAN_INTERFACE_STATE = c_uint
+WLAN_INTERFACE_STATE = c_uint                         # WLAN接口的状态
 (wlan_interface_state_not_ready,                      # =0 The interface is not ready to operate.
  wlan_interface_state_connected,                      # =1 The interface is connected to a network.
  wlan_interface_state_ad_hoc_network_formed,          # =2 The interface is the first node in an ad hoc network.
@@ -44,7 +44,7 @@ class WLAN_INTERFACE_INFO(Structure):
     ]
 
 
-class WLAN_INTERFACE_INFO_LIST(Structure):
+class WLAN_INTERFACE_INFO_LIST(Structure):              # 枚举处当前系统安装的所有无线网卡的接口信息
     _fields_ = [
         ("NumberOfItems", DWORD),                       # WLAN_INTERFACE_INFO 中包含的单元的个数。
         ("Index", DWORD),                               # 当前单元的索引，从0开始到 NumberOfItems-1
@@ -57,23 +57,24 @@ WLAN_MAX_PHY_TYPE_NUMBER = 0x8
 DOT11_SSID_MAX_LENGTH = 32
 WLAN_REASON_CODE = DWORD
 
-DOT11_BSS_TYPE = c_uint
+DOT11_BSS_TYPE = c_uint                               # 枚举类型，用来标示这个网络类型是 infrastructure 还是 independent
 (dot11_BSS_type_infrastructure,
  dot11_BSS_type_independent,
- dot11_BSS_type_any) = map(DOT11_BSS_TYPE, range(1, 4))
+ dot11_BSS_type_any                                    # 是 infrastructure 或者 independent BSS网络
+ ) = map(DOT11_BSS_TYPE, range(1, 4))
 
-DOT11_PHY_TYPE = c_uint
-dot11_phy_type_unknown = 0
-dot11_phy_type_any = 0
-dot11_phy_type_fhss = 1
-dot11_phy_type_dsss = 2
-dot11_phy_type_irbaseband = 3
-dot11_phy_type_ofdm = 4
-dot11_phy_type_hrdsss = 5
-dot11_phy_type_erp = 6
-dot11_phy_type_ht = 7
-dot11_phy_type_IHV_start = 0x80000000
-dot11_phy_type_IHV_end = 0xffffffff
+DOT11_PHY_TYPE = c_uint                               # 枚举类型，PHY类型
+dot11_phy_type_unknown = 0                            # Specifies an unknown or uninitialized PHY type
+dot11_phy_type_any = 0                                # Specifies any PHY type
+dot11_phy_type_fhss = 1                               # Specifies a frequency-hopping spread-spectrum (FHSS) PHY. Bluetooth devices can use FHSS or an adaptation of FHSS
+dot11_phy_type_dsss = 2                               # Specifies a direct sequence spread spectrum (DSSS) PHY type
+dot11_phy_type_irbaseband = 3                         # Specifies an infrared (IR) baseband PHY type
+dot11_phy_type_ofdm = 4                               # Specifies an orthogonal frequency division multiplexing (OFDM) PHY type.  802.11a devices can use OFDM
+dot11_phy_type_hrdsss = 5                             # pecifies a high-rate DSSS (HRDSSS) PHY type
+dot11_phy_type_erp = 6                                # Specifies an extended rate PHY type (ERP). 802.11g devices can use ERP
+dot11_phy_type_ht = 7                                 # Specifies the 802.11n PHY type
+dot11_phy_type_IHV_start = 0x80000000                 # Specifies the start of the range that is used to define PHY types that are developed by an independent hardware vendor (IHV)
+dot11_phy_type_IHV_end = 0xffffffff                   # Specifies the start of the range that is used to define PHY types that are developed by an independent hardware vendor (IHV)
 
 DOT11_AUTH_ALGORITHM = c_uint
 DOT11_AUTH_ALGO_80211_OPEN = 1
@@ -112,7 +113,7 @@ class DOT11_SSID(Structure):
     ]
 
 
-class WLAN_AVAILABLE_NETWORK(Structure):
+class WLAN_AVAILABLE_NETWORK(Structure):       # 结构体，包含可用无线网络（network）单元的信息
     _fields_ = [
         ("ProfileName", c_wchar * 256),
         ("dot11Ssid", DOT11_SSID),
@@ -132,7 +133,7 @@ class WLAN_AVAILABLE_NETWORK(Structure):
     ]
 
 
-class WLAN_AVAILABLE_NETWORK_LIST(Structure):
+class WLAN_AVAILABLE_NETWORK_LIST(Structure):       # 搜索接口上可用的网络
     _fields_ = [
         ("NumberOfItems", DWORD),
         ("Index", DWORD),
@@ -335,6 +336,7 @@ def get_BSSI():
     finally:
         WlanFreeMemory(pInterfaceList)
     return BSSI_Values
+
 
 
 def get_BSSI_times_and_total_seconds(times, seconds):
