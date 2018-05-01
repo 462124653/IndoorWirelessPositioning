@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
-
+import datetime
 import time
 from ctypes import *
 from ctypes.wintypes import *
 from sys import exit
+from RssData import DataBase
 
 
 def customresize(array, new_size):
@@ -362,14 +363,18 @@ def get_BSSI_times_and_total_seconds(times, seconds):
     return BSSI_to_return
 
 
+
 if __name__ == '__main__':
 
     # print get_interface()
     import time
-
+    database = DataBase()
     test = get_BSSI()
+    # 获取划分区域
+    place = input("请输入划分的区域:")
     for i in range(0, 10):
-        time.sleep(0.5)
+        time.sleep(1)  # 1秒钟收集一次数据
+        nowtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 获取当前时间
         oldTest = test
         test = get_BSSI()
         print ("Teste: " + str(i))
@@ -377,6 +382,11 @@ if __name__ == '__main__':
             print ("IGUAL")
         else:
             print ("DIFERENTE")
-        for item in test.items():
-            print (item)
-    print ("End")
+        for key, value in test.items():
+            print(key)
+            print(value[0])
+            print(value[1])
+            database.RssInsert(key, value[0], value[1], nowtime, place, i)
+            print("----")
+    database.DbClose()
+    print("End")
