@@ -14,18 +14,18 @@ class MeanFilterClass:
         # 权重 AP出现的次数
         count = 1
         # MeanCount
-        meancount = 0
+        mean_count = 0
         # 遍历时新增加的键值对
         add_dic = {}
         add_key = 0
         add_value = 0
-        dataselect = DataBase()
-        zeros = dataselect.RssSelect(place, 0)
+        data_select = DataBase()
+        zeros = data_select.RssSelect(place, 0)
         for zero in zeros:
             averages[zero[0]] = [zero[1], count]
         for i in range(1, int(frequency)):
             # print('%s点的第%d组数据:' % (place, i))
-            results = dataselect.RssSelect(place, i)
+            results = data_select.RssSelect(place, i)
             add_dic.clear()
             for result in results:
                 i = 0
@@ -50,21 +50,21 @@ class MeanFilterClass:
             print(view)
         print("---------------------")
         for finger_key, finger_value in averages.items():
-            meancount = meancount + finger_value[1]
+            mean_count = mean_count + finger_value[1]
             count = count + 1
-        meancount = (meancount / count) * (2 / 3)
-        print(count, meancount)
-        averages = {k: v for k, v in averages.items() if v[1] > meancount}
+        mean_count = (mean_count / count) * (2 / 3)
+        print(count-1, mean_count)
+        averages = {k: v for k, v in averages.items() if v[1] > mean_count}
         for view in averages.items():
             print(view)
         print("--------------------------------")
-        for key, value in averages.items():
-            averages[key] = [round(value[0]), value[1]]
-        for view in averages.items():
-            print(view)
+        # for key, value in averages.items():
+        #     averages[key] = [value[0], value[1]]
+        # for view in averages.items():
+        #     print(view)
         return averages
 
-    # 采集数据时的过滤
+    # 实时采集数据时的过滤
     def MeanFilterMeasureData(self, frequency):
         # 求均值字典
         averages = {}
@@ -111,15 +111,14 @@ class MeanFilterClass:
             meancount = meancount + finger_value[1]
             count = count + 1
         meancount = (meancount / count) * (2 / 3)
-        print(count, meancount)
+        print(count-1, meancount)
         averages = {k: v for k, v in averages.items() if v[1] > meancount}
         for view in averages.items():
             print(view)
         print("--------------------------------")
-        for key, value in averages.items():
-            averages[key] = [round(int(value[0])), value[1]]
-        for view in averages.items():
-            print(view)
+        # for key, value in averages.items():
+        #     averages[key] = [value[0], value[1]]
+        # for view in averages.items():
+        #     print(view)
         return averages
-
 

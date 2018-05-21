@@ -11,7 +11,7 @@ if __name__ == '__main__':
     room = "class"
     # 获取划分区域
     place = input("请输入划分的区域:")
-    # 收集300组数据
+    # 收集100组数据
     frequency = 100
     for i in range(0, frequency):
         time.sleep(1)  # 1秒钟收集一次数据
