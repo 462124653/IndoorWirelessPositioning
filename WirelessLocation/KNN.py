@@ -32,7 +32,7 @@ if __name__ == '__main__':
             for place_data_key, place_data_value in place_data_sql.items():
                 if online_key == place_data_key:
                     distance += (online_value - place_data_value)**2
-                    count += 1
+                    break
                 else:
                     count += 1
                 if count == len(place_data_sql)-1:
