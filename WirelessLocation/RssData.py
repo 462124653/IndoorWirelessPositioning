@@ -38,9 +38,9 @@ class DataBase:
             print("插入失败！")
             db.rollback()
 
-    def FingerDataSelcet(self, room):
-        sql = "select `mac_address`,`rss_value`,`place`,`collect_count` from `finger_data` where `room` = '%s' " % \
-              (room)
+    def FingerDataSelcet(self, place):
+        sql = "select `mac_address`,`rss_value` from `finger_data` where `place` = '%s' " % \
+              place
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
@@ -68,6 +68,16 @@ class DataBase:
             cursor.execute(sql)
             results = cursor.fetchall()
             # print("取值成功！")
+            return results
+        except:
+            print("读取数据失败！")
+            db.rollback()
+
+    def SelectPlace(self):
+        sql = "select place from finger_data group by place"
+        try:
+            cursor.execute(sql)
+            results = cursor.fetchall()
             return results
         except:
             print("读取数据失败！")
