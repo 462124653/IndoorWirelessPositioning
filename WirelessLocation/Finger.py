@@ -18,11 +18,11 @@ if __name__ == '__main__':
         nowtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 获取当前时间
         oldTest = test
         test = get_BSSI()
-        print ("Teste: " + str(i))
+        print("Teste: " + str(i))
         if oldTest == test:
-            print ("IGUAL")
+            print("IGUAL")
         else:
-            print ("DIFERENTE")
+            print("DIFERENTE")
         for key, value in test.items():
             print(key)
             print(value[0])

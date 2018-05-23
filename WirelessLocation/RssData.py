@@ -17,7 +17,7 @@ class DataBase:
             db.rollback()
 
     def RssSelect(self, place, collect_count):
-        sql = "select mac_address,rss_value from collection_data where place = '%s' and collec_count = '%d'" % \
+        sql = "select mac_address,rss_value from collection_data where place = '%s' and collect_count = '%d'" % \
               (place, collect_count)
         try:
             cursor.execute(sql)

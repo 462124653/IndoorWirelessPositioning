@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # 获取概率字典的地点
     place = []
     for probability_key, probability_value in probability.items():
-           place.append(probability_key[1])
+        place.append(probability_key[1])
     place = sorted(set(place), key=place.index)
     print(place)
     # 统计出现位置的次数字典
@@ -72,13 +72,21 @@ if __name__ == '__main__':
         for probability_key, probability_value in probability.items():
             if place_simple == probability_key[1]:
                     P = (float(probability_value[0])*probability_value[1])*P
-        P_dic[place_simple] = [P]
+        P_dic[place_simple] = P
     for item in P_dic.items():
         print(item)
     print("--------------------------")
+    # 找出最小的键值对
+    P_min = (min(P_dic.items(), key=lambda x: x[1]))
+    del P_dic[P_min[0]]
+    # 找出第二小的键值对
+    P_second = (min(P_dic.items(), key=lambda x: x[1]))
     print("当前正在位置:")
-    P_min = (min(P_dic, key=P_dic.get))
-    print(P_min)
+    # 求出同等数据量级下值大的
+    if P_second[1] / P_min[1] < 10:
+        print(P_second[0])
+    else:
+        print(P_min[0])
     data_bayes.DbClose()
 
 
