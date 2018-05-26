@@ -1,6 +1,7 @@
 from GetRss import get_BSSI
 from RssData import DataBase
 from MeanFilter import MeanFilterClass
+from GaussFilter import gauss_filter
 import datetime
 import time
 
@@ -36,5 +37,7 @@ if __name__ == '__main__':
     for key, value in results.items():
         database.FingerDataInsert(place, key, value[0], fingertime, value[1], room)
     print("数据处理完成，存入指纹库中")
+    print("高斯滤波处理数据显示")
+    gauss_filter(place)
     database.DbClose()
 

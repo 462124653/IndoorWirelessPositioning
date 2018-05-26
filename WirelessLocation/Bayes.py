@@ -1,6 +1,7 @@
 from RssData import DataBase
 from MeanFilter import MeanFilterClass
 
+
 if __name__ == '__main__':
     room = 'class'
     # 概率字典
@@ -79,12 +80,15 @@ if __name__ == '__main__':
     # 找出最小的键值对
     P_min = (min(P_dic.items(), key=lambda x: x[1]))
     del P_dic[P_min[0]]
-    # 找出第二小的键值对
-    P_second = (min(P_dic.items(), key=lambda x: x[1]))
-    print("当前正在位置:")
-    # 求出同等数据量级下值大的
-    if P_second[1] / P_min[1] < 10:
-        print(P_second[0])
+    if len(P_dic) > 1:
+        # 找出第二小的键值对
+        P_second = (min(P_dic.items(), key=lambda x: x[1]))
+        print("当前正在位置:")
+        # 求出同等数据量级下值大的
+        if P_second[1] / P_min[1] < 10:
+            print(P_second[0])
+        else:
+            print(P_min[0])
     else:
         print(P_min[0])
     data_bayes.DbClose()

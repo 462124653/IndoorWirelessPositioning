@@ -43,3 +43,4 @@ if __name__ == '__main__':
     now_place = (min(knn_size.items(), key=lambda x: x[1]))
     print("当前的位置:")
     print(now_place[0])
+    knn_data_sql.DbClose()
